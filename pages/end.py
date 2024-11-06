@@ -1,7 +1,7 @@
 import streamlit as st
 
-from auth import auth
-from variables import prolific_completion_code
+from lib.auth import auth
+from lib.variables import prolific_completion_code
 
 auth()
 

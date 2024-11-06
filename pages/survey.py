@@ -1,17 +1,22 @@
 import streamlit as st
 import streamlit_survey as ss
 
-from auth import auth
-from variables import likert_scale, questions, ad_ids
+from lib.auth import auth
+from lib.variables import questions, ad_ids
 
 auth()
 
 def submit():
   st.success("Your responses have been recorded. Thank you!")
   json = survey.to_json()
-  print(survey.to_json())
+  prolific_id = st.session_state["prolific_id"]
+  package = {
+    "prolific_id": prolific_id,
+    "survey": json,
+  }
   # TODO: Send the responses to the server
-  # st.switch_page("pages/end.py")
+  # and Prolific IDs
+  st.switch_page("pages/end.py")
 
 def question_answered(index):
   index_question = index % len(questions)
@@ -77,4 +82,5 @@ with pages:
     questions[index_question]["answer"] = response
 
 json = survey.to_json()
+st.write(f"Prolific ID: {st.session_state['prolific_id']}")
 st.json(json)

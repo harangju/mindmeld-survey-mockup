@@ -1,6 +1,6 @@
 import streamlit as st
 
-from auth import auth
+from lib.auth import auth
 
 auth()
 
