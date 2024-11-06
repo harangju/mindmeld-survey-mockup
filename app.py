@@ -9,4 +9,4 @@ with col:
   start_clicked = st.button("Start Survey", disabled=not prolific_id)
 
   if prolific_id and start_clicked:
-    st.switch_page("pages/survey.py")
+    st.switch_page("pages/instructions.py")
