@@ -73,11 +73,23 @@ with pages:
   st.markdown(f"### Display Ad Survey")
   st.markdown("Please rate the following questions based on the ad below:")
 
-  _, col, _ = st.columns([1, 2, 1])
-  with col:
+  left, right = st.columns(2)
+  with left:
     st.markdown(f"##### Ad :gray-background[{index_ad+1}/{len(ad_ids)}]")
     st.image(image_url)
-    st.markdown(f"##### :gray-background[Q{index_question+1}] {question}")
+  with right:
+    # st.markdown(f"##### :gray-background[Q{index_question+1}]")
+    header = "##### "
+    for i, q in enumerate(questions):
+      if i == index_question:
+        header += f":green-background[Q{i+1}] "
+      else:
+        header += f":gray-background[Q{i+1}] "
+      if i < len(questions) - 1:
+        header += " — "
+    st.markdown(header)
+    # st.markdown(f"##### :gray-background[Q{index_question+1}]")
+    st.markdown(f'**{question}**')
     response = survey.radio(
       item_id,
       options=options,
@@ -85,8 +97,4 @@ with pages:
       label_visibility="collapsed",
     )
     questions[index_question]["answer"] = response
-    st.divider()
-
-json = survey.to_json()
-st.write(f"Prolific ID: {st.session_state['prolific_id']}")
-st.json(json)
+  st.divider()
