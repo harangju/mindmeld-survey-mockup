@@ -2,7 +2,7 @@ import json
 import streamlit as st
 import streamlit_survey as ss
 
-from config import likert_scale, questions, ad_ids
+from variables import likert_scale, questions, ad_ids
 
 if "prolific_id" not in st.session_state:
   st.error("You must enter your Prolific ID to start the survey.")
