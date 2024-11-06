@@ -11,7 +11,7 @@ max_post_survey_attempts = 10
 auth()
 
 participant_index = get_survey_participant_index(st.session_state["prolific_id"])
-ad_ids = get_samples(participant_index)
+ad_ids = get_samples(participant_index)[:1]
 
 def submit():
   data = survey.to_json()
@@ -20,10 +20,13 @@ def submit():
   tries = 0
   while not submitted and tries < max_post_survey_attempts:
     try:
-      submitted = upload_data(prolific_id, data)
       tries += 1
+      submitted = upload_data(prolific_id, data)
     except Exception as e:
       st.error(f"Error: {e}")
+    finally:
+      if submitted:
+        st.session_state["survey_complete"] = True
   st.switch_page("pages/end.py")
 
 def question_answered(index):

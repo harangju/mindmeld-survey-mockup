@@ -5,6 +5,10 @@ from lib.variables import prolific_completion_code
 
 auth()
 
+if not st.session_state.get("survey_complete"):
+  st.error("Please complete the survey before continuing.")
+  st.stop()
+
 instructions = """
 :green-background[Your responses have been recorded.]
 
