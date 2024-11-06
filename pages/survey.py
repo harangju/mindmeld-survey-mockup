@@ -2,6 +2,8 @@ import json
 import streamlit as st
 import streamlit_survey as ss
 
+from config import likert_scale, questions, ad_ids
+
 if "prolific_id" not in st.session_state:
   st.error("You must enter your Prolific ID to start the survey.")
   login = st.button("Login")
@@ -10,42 +12,39 @@ if "prolific_id" not in st.session_state:
     st.switch_page("app.py")
   st.stop()
 
-likert_scale = ["Select option", "Strongly Agree", "Agree", "Somewhat Agree", "Neutral", "Somewhat Disagree", "Disagree", "Strongly Disagree"]
-questions = [
-  {
-    "question": "Is the copy clear and easy to read?",
-    "options": likert_scale,
-    "answer": None,
-  },
-  {
-    "question": "Is the ad visually appealing?",
-    "options": likert_scale,
-    "answer": None,
-  },
-  {
-    "question": "How likely are you to click on this ad?",
-    "options": likert_scale,
-    "answer": None,
-  },
-]
-ad_ids = [
-  "cm2b3p8cg00ik7yauzkra3bo2",
-]
-num_pages = len(questions) * len(ad_ids)
-
 def submit():
   st.success("Your responses have been recorded. Thank you!")
   questions_json = json.dumps(questions, indent=2)
   print(questions_json)
+  pages.update(2)
   # TODO: Send the responses to the server
   st.switch_page("pages/end.py")
 
 survey = ss.StreamlitSurvey("Display Ad Survey")
+num_pages = len(questions) * len(ad_ids)
 pages = survey.pages(
   num_pages,
   progress_bar=True,
   on_submit=submit,
 )
+
+next_button = lambda pages: st.button(
+  "Next",
+  use_container_width=True,
+  on_click=pages.next,
+  disabled=(pages.current == pages.n_pages-1) or (questions[pages.current]["answer"] == "Select option"),
+  key=f"{pages.current_page_key}_btn_next_custom",
+)
+pages.next_button = next_button
+
+submit_button = lambda pages: st.button(
+  "Submit",
+  use_container_width=True,
+  type="primary",
+  disabled=questions[pages.current]["answer"] == "Select option",
+  key=f"{pages.current_page_key}_btn_next_custom",
+)
+pages.submit_button = submit_button
 
 with pages:
 
@@ -71,4 +70,5 @@ with pages:
       index=0,
       label_visibility="collapsed",
     )
+      
     questions[index_question]["answer"] = response
