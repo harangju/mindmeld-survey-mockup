@@ -1,5 +1,7 @@
 import streamlit as st
 
+from variables import prolific_completion_code
+
 if "prolific_id" not in st.session_state:
   st.error("You must enter your Prolific ID to start the survey.")
   login = st.button("Login")
@@ -22,5 +24,5 @@ with col:
   st.markdown(instructions)
 
   st.html(
-    "<a href='https://app.prolific.co/submissions/complete?cc=1'>Return to Prolific</a>"
+    f"<a href='https://app.prolific.co/submissions/complete?cc={prolific_completion_code}'>Return to Prolific</a>"
   )
