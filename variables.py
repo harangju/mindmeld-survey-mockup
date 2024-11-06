@@ -1,4 +1,13 @@
-likert_scale = ["Select option", "Strongly Agree", "Agree", "Somewhat Agree", "Neutral", "Somewhat Disagree", "Disagree", "Strongly Disagree"]
+likert_scale = [
+  ":gray[:material/arrow_downward: Select option]",
+  "Strongly Agree",
+  "Agree",
+  "Somewhat Agree",
+  "Neutral",
+  "Somewhat Disagree",
+  "Disagree",
+  "Strongly Disagree",
+]
 
 questions = [
   {
