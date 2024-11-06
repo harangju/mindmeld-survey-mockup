@@ -9,9 +9,9 @@ if "prolific_id" not in st.session_state:
   st.stop()
 
 instructions = """
-You have quit the study.
+Thank you for participating in our survey. Your responses will help us understand how users interact with display ads.
 
-Please go back to Prolific and return the study. Thank you!
+Please return to Prolific to complete the study. Thank you!
 """
 
 _, col, _ = st.columns([1, 3, 1])
@@ -22,5 +22,5 @@ with col:
   st.markdown(instructions)
 
   st.html(
-    "<a href='https://app.prolific.co/submissions/complete?cc=1'>Go back to Prolific</a>"
+    "<a href='https://app.prolific.co/submissions/complete?cc=1'>Return to Prolific</a>"
   )

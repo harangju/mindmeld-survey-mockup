@@ -2,6 +2,14 @@ import json
 import streamlit as st
 import streamlit_survey as ss
 
+if "prolific_id" not in st.session_state:
+  st.error("You must enter your Prolific ID to start the survey.")
+  login = st.button("Login")
+  if login:
+    st.session_state["prolific_id"] = None
+    st.switch_page("app.py")
+  st.stop()
+
 likert_scale = ["Select option", "Strongly Agree", "Agree", "Somewhat Agree", "Neutral", "Somewhat Disagree", "Disagree", "Strongly Disagree"]
 questions = [
   {
@@ -23,15 +31,16 @@ questions = [
 ad_ids = [
   "cm2b3p8cg00ik7yauzkra3bo2",
 ]
-
-survey = ss.StreamlitSurvey("Display Ad Survey")
+num_pages = len(questions) * len(ad_ids)
 
 def submit():
   st.success("Your responses have been recorded. Thank you!")
   questions_json = json.dumps(questions, indent=2)
   print(questions_json)
+  # TODO: Send the responses to the server
+  st.switch_page("pages/end.py")
 
-num_pages = len(questions) * len(ad_ids)
+survey = ss.StreamlitSurvey("Display Ad Survey")
 pages = survey.pages(
   num_pages,
   progress_bar=True,

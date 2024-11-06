@@ -9,4 +9,5 @@ with col:
   start_clicked = st.button("Start Survey", disabled=not prolific_id)
 
   if prolific_id and start_clicked:
+    st.session_state["prolific_id"] = prolific_id
     st.switch_page("pages/instructions.py")
