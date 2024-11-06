@@ -1,0 +1,9 @@
+name: mindmeld_survey
+channels:
+  - defaults
+dependencies:
+  - python=3.12
+  - streamlit
+  - pip
+  - pip:
+    - streamlit_survey==1.0.0
