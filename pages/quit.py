@@ -1,12 +1,8 @@
 import streamlit as st
 
-if "prolific_id" not in st.session_state:
-  st.error("You must enter your Prolific ID to start the survey.")
-  login = st.button("Login")
-  if login:
-    st.session_state["prolific_id"] = None
-    st.switch_page("app.py")
-  st.stop()
+from auth import auth
+
+auth()
 
 instructions = """
 You have quit the study.

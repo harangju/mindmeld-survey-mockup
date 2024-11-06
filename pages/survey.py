@@ -2,15 +2,10 @@ import json
 import streamlit as st
 import streamlit_survey as ss
 
+from auth import auth
 from variables import likert_scale, questions, ad_ids
 
-if "prolific_id" not in st.session_state:
-  st.error("You must enter your Prolific ID to start the survey.")
-  login = st.button("Login")
-  if login:
-    st.session_state["prolific_id"] = None
-    st.switch_page("app.py")
-  st.stop()
+auth()
 
 def submit():
   st.success("Your responses have been recorded. Thank you!")

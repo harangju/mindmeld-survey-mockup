@@ -1,14 +1,9 @@
 import streamlit as st
 
+from auth import auth
 from variables import prolific_completion_code
 
-if "prolific_id" not in st.session_state:
-  st.error("You must enter your Prolific ID to start the survey.")
-  login = st.button("Login")
-  if login:
-    st.session_state["prolific_id"] = None
-    st.switch_page("app.py")
-  st.stop()
+auth()
 
 instructions = """
 Thank you for participating in our survey. Your responses will help us understand how users interact with display ads.
