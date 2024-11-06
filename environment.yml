@@ -1,9 +1,12 @@
-name: mindmeld_survey
+name: slsurvey
 channels:
   - defaults
+  - conda-forge
 dependencies:
   - python=3.12
   - streamlit
   - pip
+  - psycopg2
+  - sqlalchemy
   - pip:
     - streamlit_survey==1.0.0

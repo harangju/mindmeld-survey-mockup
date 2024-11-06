@@ -24,8 +24,4 @@ questions = [
   },
 ]
 
-ad_ids = [
-  "cm2b3p8cg00ik7yauzkra3bo2",
-]
-
 prolific_completion_code = "NOCODE"

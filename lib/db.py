@@ -1,8 +1,10 @@
-import os
-from sqlalchemy import create_engine
+import streamlit as st
+import uuid
+from sqlalchemy import create_engine, text
 from sqlalchemy.exc import SQLAlchemyError
 
-connection_url = f"postgresql://{os.environ['POSTGRES_USER']}:{os.environ['POSTGRES_PASSWORD']}@{os.environ['POSTGRES_HOST']}:{os.environ['POSTGRES_PORT']}/{os.environ['POSTGRES_DATABASE']}?sslmode=require"
+endpoint_id = st.secrets['POSTGRES_HOST'].split('.')[0]
+connection_url = f"postgresql://{st.secrets['POSTGRES_USER']}:{st.secrets['POSTGRES_PASSWORD']}@{st.secrets['POSTGRES_HOST']}:{st.secrets['POSTGRES_PORT']}/{st.secrets['POSTGRES_DATABASE']}?sslmode=require&options=endpoint%3D{endpoint_id}"
 engine = create_engine(connection_url)
 
 def get_survey_participant_index(prolific_id):
@@ -12,15 +14,28 @@ def get_survey_participant_index(prolific_id):
     connection = engine.connect()
     transaction = connection.begin()
     try:
+        # Check if the participant already exists
+        result = connection.execute(
+            text('SELECT "index" FROM "SurveyParticipant" WHERE "prolificId" = :prolific_id;'),
+            {'prolific_id': prolific_id}
+        )
+        existing_index = result.scalar()
+        
+        if existing_index is not None:
+            return existing_index
+
         # Get the largest index
-        result = connection.execute('SELECT MAX("index") FROM "SurveyParticipant";')
+        result = connection.execute(text('SELECT MAX("index") FROM "SurveyParticipant";'))
         max_index = result.scalar()
         next_index = (max_index or 0) + 1
 
+        # Generate a unique ID for the new participant
+        new_id = str(uuid.uuid4())
+
         # Insert the new participant
         connection.execute(
-            'INSERT INTO "SurveyParticipant" ("prolificId", "index") VALUES (%s, %s);',
-            (prolific_id, next_index)
+            text('INSERT INTO "SurveyParticipant" ("id", "prolificId", "index") VALUES (:id, :prolific_id, :index);'),
+            {'id': new_id, 'prolific_id': prolific_id, 'index': next_index}
         )
         
         # Commit the transaction
@@ -40,10 +55,13 @@ def upload_data(prolific_id, data):
     connection = engine.connect()
     transaction = connection.begin()
     try:
+        # Generate a unique ID for the new mockup
+        new_id = str(uuid.uuid4())
+
         # Insert the new mockup data
         connection.execute(
-            'INSERT INTO "SurveyMockup" ("prolificId", "data") VALUES (%s, %s);',
-            (prolific_id, data)
+            text('INSERT INTO "SurveyMockup" ("id", "prolificId", "data") VALUES (:id, :prolific_id, :data);'),
+            {'id': new_id, 'prolific_id': prolific_id, 'data': data}
         )
         
         # Commit the transaction

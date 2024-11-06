@@ -16,6 +16,9 @@ What is a **copy**? It is the text that appears on the ad. For example, "Get 50%
 #### What is the ad for?
 
 The ad is for an annual report by a research organization that studies the impact of digital technologies on society, business, and the economy.
+
+#### How many ads will I see?
+You will see 40 ads in total. For each ad, there are 3 questions to answer.
 """
 
 _, col, _ = st.columns([1, 3, 1])

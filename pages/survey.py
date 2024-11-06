@@ -2,9 +2,14 @@ import streamlit as st
 import streamlit_survey as ss
 
 from lib.auth import auth
-from lib.variables import questions, ad_ids
+from lib.data import get_samples
+from lib.variables import questions
+from lib.db import get_survey_participant_index
 
 auth()
+
+participant_index = get_survey_participant_index(st.session_state["prolific_id"])
+ad_ids = get_samples(participant_index)
 
 def submit():
   st.success("Your responses have been recorded. Thank you!")
@@ -65,21 +70,22 @@ with pages:
 
   item_id = f"{ad_id}_{index_question}"
 
-  st.markdown(f"### Ad #{index_ad+1}")
+  st.markdown(f"### Display Ad Survey")
   st.markdown("Please rate the following questions based on the ad below:")
 
-  _, col, _ = st.columns([1, 3, 1])
+  _, col, _ = st.columns([1, 2, 1])
   with col:
+    st.markdown(f"##### Ad :gray-background[{index_ad+1}/{len(ad_ids)}]")
     st.image(image_url)
-    st.markdown(f"##### {question}")
+    st.markdown(f"##### :gray-background[Q{index_question+1}] {question}")
     response = survey.radio(
       item_id,
       options=options,
       index=0,
       label_visibility="collapsed",
     )
-
     questions[index_question]["answer"] = response
+    st.divider()
 
 json = survey.to_json()
 st.write(f"Prolific ID: {st.session_state['prolific_id']}")
