@@ -5,11 +5,13 @@ from auth import auth
 auth()
 
 instructions = """
-We are conducting a survey to understand how users interact with display ads.
+In this survey, you will be shown a series of display ads and asked to rate them based on a set of questions.
 
-If you would like to participate, please click "Start Survey".
+#### Definitions
 
-If you would like to quit, please click "Quit Study".
+A **display ad** is a type of online advertisement that is displayed on a webpage. It can be in the form of a banner, image, or video.
+
+What is a **copy**? It is the text that appears on the ad. For example, "Get 50% off today!" is a copy.
 """
 
 _, col, _ = st.columns([1, 3, 1])
@@ -19,17 +21,9 @@ with col:
 
   st.markdown(instructions)
 
-  left, _, right = st.columns(3)
-  with left:
-    quit_button = st.button(
-      "Quit Study",
-      help="If you quit, you are returning the study.",
-    )
-  with right:
+  _, center, _ = st.columns(3)
+  with center:
     start_button = st.button("Start Survey")
 
   if start_button:
     st.switch_page("pages/survey.py")
-
-  if quit_button:
-    st.switch_page("pages/quit.py")

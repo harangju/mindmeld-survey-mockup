@@ -11,7 +11,7 @@ likert_scale = [
 
 questions = [
   {
-    "question": "Is the copy clear and easy to read?",
+    "question": "The ad copy",
     "options": likert_scale,
     "answer": None,
   },

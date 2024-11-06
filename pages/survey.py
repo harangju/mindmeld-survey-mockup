@@ -10,8 +10,6 @@ auth()
 def submit():
   st.success("Your responses have been recorded. Thank you!")
   questions_json = json.dumps(questions, indent=2)
-  print(questions_json)
-  pages.update(2)
   # TODO: Send the responses to the server
   st.switch_page("pages/end.py")
 
@@ -65,5 +63,5 @@ with pages:
       index=0,
       label_visibility="collapsed",
     )
-      
+
     questions[index_question]["answer"] = response
