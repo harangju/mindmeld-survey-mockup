@@ -2,4 +2,3 @@ streamlit
 psycopg2
 sqlalchemy
 streamlit-survey
-streamlit_survey

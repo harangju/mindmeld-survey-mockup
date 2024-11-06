@@ -4,7 +4,9 @@ channels:
   - conda-forge
 dependencies:
   - python=3.12
+  - streamlit
   - pip
+  - psycopg2
+  - sqlalchemy
   - pip:
-      - -r requirements.txt
-      - streamlit_survey==1.0.0
+    - streamlit_survey==1.0.0
