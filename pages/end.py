@@ -6,6 +6,8 @@ from variables import prolific_completion_code
 auth()
 
 instructions = """
+:green-background[Your responses have been recorded.]
+
 Thank you for participating in our survey. Your responses will help us understand how users interact with display ads.
 
 Please return to Prolific to complete the study. Thank you!
