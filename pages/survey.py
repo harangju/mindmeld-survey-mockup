@@ -4,7 +4,9 @@ import streamlit_survey as ss
 from lib.auth import auth
 from lib.data import get_samples
 from lib.variables import questions
-from lib.db import get_survey_participant_index
+from lib.db import get_survey_participant_index, upload_data
+
+max_post_survey_attempts = 10
 
 auth()
 
@@ -12,15 +14,17 @@ participant_index = get_survey_participant_index(st.session_state["prolific_id"]
 ad_ids = get_samples(participant_index)
 
 def submit():
-  json = survey.to_json()
+  data = survey.to_json()
   prolific_id = st.session_state["prolific_id"]
-  package = {
-    "prolific_id": prolific_id,
-    "survey": json,
-  }
-  # TODO: Send the responses to the server
-  # and Prolific IDs
-  st.switch_page("pages/end.py")
+  submitted = False
+  tries = 0
+  while not submitted and tries < max_post_survey_attempts:
+    try:
+      submitted = upload_data(prolific_id, data)
+      tries += 1
+    except Exception as e:
+      st.error(f"Error: {e}")
+  # st.switch_page("pages/end.py")
 
 def question_answered(index):
   index_question = index % len(questions)

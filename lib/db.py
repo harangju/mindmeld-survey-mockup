@@ -66,6 +66,7 @@ def upload_data(prolific_id, data):
         
         # Commit the transaction
         transaction.commit()
+        return True
     except SQLAlchemyError as e:
         transaction.rollback()
         raise e
