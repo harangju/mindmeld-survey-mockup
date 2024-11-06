@@ -11,19 +11,16 @@ likert_scale = [
 
 questions = [
   {
-    "question": "The ad copy",
+    "question": "The ad copy (ie, text) is clear, relevant, and engaging.",
     "options": likert_scale,
-    "answer": None,
   },
   {
-    "question": "Is the ad visually appealing?",
+    "question": "The image is visually appealing and relevant.",
     "options": likert_scale,
-    "answer": None,
   },
   {
-    "question": "How likely are you to click on this ad?",
+    "question": "I am likely to click on this ad.",
     "options": likert_scale,
-    "answer": None,
   },
 ]
 

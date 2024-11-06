@@ -1,4 +1,3 @@
-import json
 import streamlit as st
 import streamlit_survey as ss
 
@@ -9,9 +8,19 @@ auth()
 
 def submit():
   st.success("Your responses have been recorded. Thank you!")
-  questions_json = json.dumps(questions, indent=2)
+  json = survey.to_json()
+  print(survey.to_json())
   # TODO: Send the responses to the server
-  st.switch_page("pages/end.py")
+  # st.switch_page("pages/end.py")
+
+def question_answered(index):
+  index_question = index % len(questions)
+  index_ad = int(index / len(questions))
+  ad_id = ad_ids[index_ad]
+  question_id = f"{ad_id}_{index_question}"
+  return (
+    question_id in survey.data and "Select option" not in survey.data[question_id]["value"]
+  )
 
 survey = ss.StreamlitSurvey("Display Ad Survey")
 num_pages = len(questions) * len(ad_ids)
@@ -25,7 +34,7 @@ next_button = lambda pages: st.button(
   "Next",
   use_container_width=True,
   on_click=pages.next,
-  disabled=(pages.current == pages.n_pages-1) or (questions[pages.current]["answer"] == "Select option"),
+  disabled=(pages.current == pages.n_pages-1) or not question_answered(pages.current),
   key=f"{pages.current_page_key}_btn_next_custom",
 )
 pages.next_button = next_button
@@ -34,17 +43,18 @@ submit_button = lambda pages: st.button(
   "Submit",
   use_container_width=True,
   type="primary",
-  disabled=questions[pages.current]["answer"] == "Select option",
+  disabled=not question_answered(pages.current),
   key=f"{pages.current_page_key}_btn_next_custom",
 )
 pages.submit_button = submit_button
 
 with pages:
 
-  index_question = pages.current // len(ad_ids)
+  index_question = pages.current % len(questions)
   question = questions[index_question]['question']
+  options = questions[index_question]['options']
 
-  index_ad = pages.current % len(ad_ids)
+  index_ad = int(pages.current / len(questions))
   ad_id = ad_ids[index_ad]
   image_url = f"https://mit-mindmeld.s3.us-east-2.amazonaws.com/ad mocks/ad_{ad_id}.png"
 
@@ -56,12 +66,15 @@ with pages:
   _, col, _ = st.columns([1, 3, 1])
   with col:
     st.image(image_url)
-    st.markdown(f"**{question}**")
+    st.markdown(f"##### {question}")
     response = survey.radio(
       item_id,
-      options=likert_scale,
+      options=options,
       index=0,
       label_visibility="collapsed",
     )
 
     questions[index_question]["answer"] = response
+
+json = survey.to_json()
+st.json(json)

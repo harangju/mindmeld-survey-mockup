@@ -12,6 +12,10 @@ In this survey, you will be shown a series of display ads and asked to rate them
 A **display ad** is a type of online advertisement that is displayed on a webpage. It can be in the form of a banner, image, or video.
 
 What is a **copy**? It is the text that appears on the ad. For example, "Get 50% off today!" is a copy.
+
+#### What is the ad for?
+
+The ad is for an annual report by a research organization that studies the impact of digital technologies on society, business, and the economy.
 """
 
 _, col, _ = st.columns([1, 3, 1])
