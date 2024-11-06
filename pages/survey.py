@@ -24,7 +24,7 @@ def submit():
       tries += 1
     except Exception as e:
       st.error(f"Error: {e}")
-  # st.switch_page("pages/end.py")
+  st.switch_page("pages/end.py")
 
 def question_answered(index):
   index_question = index % len(questions)
