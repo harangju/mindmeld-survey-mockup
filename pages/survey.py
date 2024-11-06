@@ -78,11 +78,10 @@ with pages:
     st.markdown(f"##### Ad :gray-background[{index_ad+1}/{len(ad_ids)}]")
     st.image(image_url)
   with right:
-    # st.markdown(f"##### :gray-background[Q{index_question+1}]")
     header = "##### "
     for i, q in enumerate(questions):
       if i == index_question:
-        header += f":green-background[Q{i+1}] "
+        header += f":red-background[Q{i+1}] "
       else:
         header += f":gray-background[Q{i+1}] "
       if i < len(questions) - 1:
