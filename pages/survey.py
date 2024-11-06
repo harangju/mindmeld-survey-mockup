@@ -12,7 +12,6 @@ participant_index = get_survey_participant_index(st.session_state["prolific_id"]
 ad_ids = get_samples(participant_index)
 
 def submit():
-  st.success("Your responses have been recorded. Thank you!")
   json = survey.to_json()
   prolific_id = st.session_state["prolific_id"]
   package = {
@@ -71,7 +70,7 @@ with pages:
   item_id = f"{ad_id}_{index_question}"
 
   st.markdown(f"### Display Ad Survey")
-  st.markdown("Please rate the following questions based on the ad below:")
+  st.markdown("The ad is for an annual report by a research organization that studies the impact of digital technologies on society, business, and the economy. Please rate the following questions based on the ad below:")
 
   left, right = st.columns(2)
   with left:
@@ -87,7 +86,6 @@ with pages:
       if i < len(questions) - 1:
         header += " — "
     st.markdown(header)
-    # st.markdown(f"##### :gray-background[Q{index_question+1}]")
     st.markdown(f'**{question}**')
     response = survey.radio(
       item_id,
@@ -96,4 +94,3 @@ with pages:
       label_visibility="collapsed",
     )
     questions[index_question]["answer"] = response
-  st.divider()

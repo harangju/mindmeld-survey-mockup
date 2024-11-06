@@ -11,15 +11,15 @@ likert_scale = [
 
 questions = [
   {
-    "question": "The *text* is clear, relevant, and engaging.",
+    "question": "The :red-background[*text*] is clear, relevant, and engaging.",
     "options": likert_scale,
   },
   {
-    "question": "The *image* is visually appealing and relevant.",
+    "question": "The :red-background[*image*] is visually appealing and relevant.",
     "options": likert_scale,
   },
   {
-    "question": "I am likely to *click* on this ad.",
+    "question": "I am likely to :red-background[*click*] on this ad.",
     "options": likert_scale,
   },
 ]
