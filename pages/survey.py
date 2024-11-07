@@ -11,7 +11,7 @@ max_post_survey_attempts = 10
 auth()
 
 participant_index = get_survey_participant_index(st.session_state["prolific_id"])
-ad_ids = get_samples(participant_index)[:1]
+ad_ids = get_samples(participant_index)
 
 def submit():
   data = survey.to_json()

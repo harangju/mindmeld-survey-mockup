@@ -5,7 +5,10 @@ from lib.auth import auth
 auth()
 
 instructions = """
+#### Instructions
 In this survey, you will be shown a series of display ads and asked to rate them based on a set of questions.
+
+Do not click the back or ":material/more_vert:" button or refresh the page during the survey. If you do, please enter your Prolific ID again.
 
 #### Definitions
 
