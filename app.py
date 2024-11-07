@@ -1,4 +1,13 @@
+import os
 import streamlit as st
+from lib.env import load_secrets
+
+environment = os.getenv("ENVIRONMENT", "local")
+project_id = "mindmeld-hj"
+secret_id = "streamlit-secrets"
+
+if environment == "production":
+  load_secrets(project_id, secret_id)
 
 if "prolific_id" in st.session_state and st.session_state["prolific_id"]:
   st.switch_page("pages/start.py")
