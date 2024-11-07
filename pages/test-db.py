@@ -7,7 +7,7 @@ from lib.db import get_survey_participant_index
 # st.write(f"Participant index: {index}")
 
 conn = st.connection("postgresql", type="sql")
-df = conn.query('SELECT * FROM "SurveyMockup";')
+df = conn.query('SELECT * FROM "SurveyMockup";', ttl=30)
 st.markdown("## SurveyMockup")
 st.write(df)
 
